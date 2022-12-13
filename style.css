@@ -1,61 +1,212 @@
 * {
-    padding: 0;
     margin: 0;
+    padding: 0;
+  }
+  
+  
+  
+  :root {
+    /* color for main nav */
+    --bg-light-green: #17db8d;
+  
+    /* color for (description and image (tittled)) nav. */
+    --bg-green-yellow: --bg-green-yellow;
+  
+    /* color for border */
+    --b-dark-yellow: rgb(189, 64, 149);
+  
+    /* color for new wrapper div */
+    --b-light-yellow: #fff;
+  }
+  
+  .nav-bar {
+    width: 100%;
+    height: 60px;
+    justify-content: center;
+    background-color: var(--bg-light-green);
+    align-items: center;
+    text-align: center;
     box-sizing: border-box;
-    font-family: "Roboto Mono", monospace;
+    border-bottom: solid 2px #D07CA4;
+    color: white;
   }
-  /* body {
-    height: 100vh;
-    background: linear-gradient(to bottom, #eff0ee 50%, #573030 50%); 
-  }*/
-  .calculator {
-    width: 400px;
-    background-color: #0e0111;
-    padding: 50px 30px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    border-radius: 8px;
-    box-shadow: 0 20px 50px rgba(6, 14, 74, 0.4);
+  
+  .d-flex {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
-  .display {
+  
+  .students {
+    display: flex;
+    gap: 10px;
+    height: auto;
     width: 100%;
+    background-color: #FEE9E5; 
   }
-  .display input {
-    width: 100%;
-    padding: 15px 10px;
-    text-align: right;
-    border: none;
-    /*background-color: transparent;*/
-    color: hwb(180 97% 2%);
-    font-size: 35px;
+  
+  .enroll-student {
+    margin-top: 30px;
+    padding-right: 100px;
+    box-sizing: border-box;
+    width: 45%;
+    height: auto;
   }
-  .display input::placeholder {
-    color: #9490ac;
+  
+  #enrolled-students {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    justify-content: center;
+    width: 55%;
+    height: calc(100vh - 70px);
+    overflow: scroll;
   }
-  .buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
-    margin-top: 40px;
+  
+  .enroll-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
-  .buttons input[type="button"] {
+  
+  .gender {
+    padding-left: 15px;
+  }
+  
+  .label {
+    display: flex;
+    font-size: 30px;
+  }
+  
+  .form-control {
+    margin-bottom: 16px;
+  }
+  
+  .seperation-border {
+    box-sizing: border-box;
+    box-shadow: 0px 0px 3px 0px var(--bg-light-green);
+    width: 1.3px;
+    height: 70vh;
+    background: var(--bg-light-green);
+  }
+  
+  @media screen and (max-width: 768px) {
+    hr.seperation-border{
+      height: 0;
+    }
+  }
+  
+  .sectionHeading {
+    display: flex;
+    align-items: center;
+    background-color:var(--green);
+    color: #fff;
+    box-sizing: border-box;
+    border: solid 2px var(--b-dark-yellow);
+  }
+  
+  .sectionHeading > p {
+    padding: 10px 12px;
+    margin: 0;
     font-size: 20px;
-    padding: 17px;
+    font-weight: 700;
+  }
+  
+  .description {
+    box-sizing: border-box;
+    border-right: solid 2px var(--bg-light-yellow);
+    margin-bottom: 0;
+    width: 70%;
+  }
+  
+  .Image {
+    margin-bottom: 0;
+    width: 30%;
+  }
+  
+  .infoText {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .userName {
+    font-weight: bold;
+  }
+  
+  .wrapper {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 130px;
+    justify-content: space-between;
+    border: solid 2px var(--b-dark-yellow);
+    border-top: none;
+    animation: fadeIn 2s;
+    position: relative;
+  }
+  
+  .userDeleteBtn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
     border: none;
     background-color: transparent;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 5px;
+    font-size: 25px;
+    transform: rotate(45deg);
+    display: none;
   }
-  .buttons input[type="button"]:hover {
-    box-shadow: 0 8px 25px #0e1935;
+  
+  @media screen and (max-width: 768px) {
+    button.userDeleteBtn {
+      display:block;
+    }
+    
   }
-  input[type="button"]#equal {
-    grid-row: span 2;
-    background-color: #2d4c75;
+  
+  .wrapper:hover .userDeleteBtn {
+    display: block;
   }
-  input[type="button"][value="0"] {
-    grid-column: span 2;
-  } 
+  
+  .wrapper:nth-child(odd) {
+    background-color: #fff;
+  }
+  .wrapper:nth-child(even) {
+    background-color: var(--b-light-yellow);
+  }
+  
+  .textInfoContainer {
+    width: 70%;
+    height: 100%;
+    box-sizing: border-box;
+    border-right: solid 2px var(--b-dark-yellow);
+    padding: 10px;
+  }
+  
+  .imageContainer {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .userImage {
+    height: auto;
+    width: 105px;
+  }
+  
+  .fadeIn {
+    animation: fadeIn 2s;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
