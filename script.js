@@ -1,93 +1,67 @@
-const taskInput=document.querySelector(".task-input input"),
-taskButton=document.querySelector(".task-input button"),
-filters=document.querySelectorAll(".filters span"),
-clearAll=document.querySelector(".clear-btn"),
-taskBox=document.querySelector(".task-box");
+console.log("Welcome to Tic Tac Toe")
+let music = new Audio("music.mp3")
+let audioTurn = new Audio("ting.mp3")
+let gameover = new Audio("gameover.mp3")
+let turn = "X"
+let isgameover = false;
 
-let editId, isEditTask=false;
-let todos=JSON.parse(localStorage.getItem("todo-list"));
-
-filters.forEach(btn =>{
-    btn.addEventListener("click",()=>{
-        document.querySelector("span.active").classList.remove("active");
-        btn.classList.add("active");
-        showToDo(btn.id);
-    });
-});
-
-function showToDo(filter){
-    let liTag=" ";
-    if(todos){
-        todos.forEach((todo,id)=>{
-            let completed=todo.status=="completed"?"checked":"";
-            if(filter==todo.status || filter=="all"){
-                liTag+=`<li class="task">
-                            <label for="${id}">
-                                <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
-                                <p class="${completed}">${todo.name}</p>
-                            </label>
-                            <div class="settings">
-                                <i onclick="editTask(${id},'${todo.name}')" class="uil uil-pen"></i>&nbsp;&nbsp;
-                                <i onclick="deleteTask(${id},'${filter}')" class="uil uil-trash"></i>
-                            </div>
-                        </li>`;
-            }
-        });
-    }
-    taskBox.innerHTML=liTag || `<span>No tasks found</span>`;
-    let checkTask=taskBox.querySelectorAll(".task");
-    !checkTask.length?clearAll.classList.remove("active"):clearAll.classList.add("active");
-    taskBox.offsetHeight>=300?taskBox.classList.add("overflow"):taskBox.classList.remove("overflow");
-}
-showToDo("all");
-
-function editTask(taskId, textName){
-    editId=taskId;
-    isEditTask=true;
-    taskInput.value=textName;
-    taskInput.focus();
-    taskInput.classList.add("active");
+// Function to change the turn
+const changeTurn = ()=>{
+    return turn === "X"? "0": "X"
 }
 
-function deleteTask(deleteId,filter){
-    isEditTask=false;
-    todos.splice(deleteId,1);
-    localStorage.setItem("todo-list",JSON.stringify(todos));
-    showToDo(filter);
-}
-
-function updateStatus(selectedTask){
-    let taskName=selectedTask.parentElement.lastElementChild;
-    if(selectedTask.checked){
-        taskName.classList.add("checked");
-        todos[selectedTask.id].status="completed";
-    }else{
-        taskName.classList.add("checked");
-        todos[selectedTask.id].status="pending";
-    }
-    localStorage.setItem("todo-list",JSON.stringify(todos));
-}
-
-clearAll.addEventListener("click",()=>{
-    isEditTask=false;
-    todos.splice(0,todos.length);
-    localStorage.setItem("todo-list",JSON.stringify(todos));
-    showToDo();
-});
-
-taskButton.addEventListener("click",()=>{
-    let userTask=taskInput.value.trim();
-    if(userTask){
-        if(!isEditTask){
-            todos=!todos?[]:todos;
-            let taskInfo={name:userTask,status:"pending"};
-            todos.push(taskInfo);
-        }else{
-            isEditTask=false;
-            todos[editId].name=userTask;
+// Function to check for a win
+const checkWin = ()=>{
+    let boxtext = document.getElementsByClassName('boxtext');
+    let wins = [
+        [0, 1, 2, 5, 5, 0],
+        [3, 4, 5, 5, 15, 0],
+        [6, 7, 8, 5, 25, 0],
+        [0, 3, 6, -5, 15, 90],
+        [1, 4, 7, 5, 15, 90],
+        [2, 5, 8, 15, 15, 90],
+        [0, 4, 8, 5, 15, 45],
+        [2, 4, 6, 5, 15, 135],
+    ]
+    wins.forEach(e =>{
+        if((boxtext[e[0]].innerText === boxtext[e[1]].innerText) && (boxtext[e[2]].innerText === boxtext[e[1]].innerText) && (boxtext[e[0]].innerText !== "") ){
+            document.querySelector('.info').innerText = boxtext[e[0]].innerText + " Won"
+            isgameover = true
+            document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "200px";
+            document.querySelector(".line").style.transform = `translate(${e[3]}vw, ${e[4]}vw) rotate(${e[5]}deg)`
+            document.querySelector(".line").style.width = "20vw";
         }
-        taskInput.value="";
-        localStorage.setItem("todo-list",JSON.stringify(todos));
-        showToDo(document.querySelector("span.active").id);
-    }
-});
+    })
+}
+
+// Game Logic
+// music.play()
+let boxes = document.getElementsByClassName("box");
+Array.from(boxes).forEach(element =>{
+    let boxtext = element.querySelector('.boxtext');
+    element.addEventListener('click', ()=>{
+        if(boxtext.innerText === ''){
+            boxtext.innerText = turn;
+            turn = changeTurn();
+            audioTurn.play();
+            checkWin();
+            if (!isgameover){
+                document.getElementsByClassName("info")[0].innerText  = "Turn for " + turn;
+            } 
+        }
+    })
+})
+
+// Add onclick listener to reset button
+reset.addEventListener('click', ()=>{
+    let boxtexts = document.querySelectorAll('.boxtext');
+    Array.from(boxtexts).forEach(element => {
+        element.innerText = ""
+    });
+    turn = "X"; 
+    isgameover = false
+    document.querySelector(".line").style.width = "0vw";
+    document.getElementsByClassName("info")[0].innerText  = "Turn for " + turn;
+    document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "0px"
+})
+
